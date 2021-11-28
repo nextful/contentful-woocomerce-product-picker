@@ -1,10 +1,16 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, ChangeEvent } from 'react';
 import { AppExtensionSDK } from '@contentful/app-sdk';
 import { PlainClientAPI } from 'contentful-management';
-import { Heading, Form, Workbench, Paragraph } from '@contentful/forma-36-react-components';
+import { Heading, Form, Workbench, Paragraph, TextField } from '@contentful/forma-36-react-components';
 import styles from './ConfigScreen.module.css';
 
-export interface AppInstallationParameters {}
+export interface AppInstallationParameters {
+  apiUrl?: string;
+  apiKey?: string;
+  apiSecret?: string;
+}
+
+type ParameterKeys = keyof AppInstallationParameters;
 
 interface ConfigScreenProps {
   sdk: AppExtensionSDK;
@@ -56,11 +62,22 @@ const ConfigScreen = (props: ConfigScreenProps) => {
     })();
   }, [props.sdk]);
 
+  const handleChange= (event: ChangeEvent): void => {
+    const target = event.target as HTMLInputElement;
+    const { name, value } = target;
+    const newParams = {...parameters};
+    newParams[name as ParameterKeys]= value;
+    setParameters(newParams);
+  };
+
   return (
     <Workbench className={styles.Container}>
       <Form>
         <Heading>App Config</Heading>
         <Paragraph>Welcome to your contentful app. This is your config page.</Paragraph>
+        <TextField name="apiUrl" id="apiUrl" labelText="URL" required value={parameters.apiUrl} onChange={handleChange}/>
+        <TextField name="apiKey" id="apiKey" labelText="apiKey" required value={parameters.apiKey} onChange={handleChange}/>
+        <TextField name="apiSecret" id="apiSecret" labelText="apiSecret" required value={parameters.apiSecret} onChange={handleChange}/>
       </Form>
     </Workbench>
   );

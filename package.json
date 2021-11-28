@@ -7,6 +7,7 @@
     "@contentful/forma-36-fcss": "^0.3.4",
     "@contentful/forma-36-react-components": "^3.100.4",
     "@contentful/forma-36-tokens": "^0.11.1",
+    "@woocommerce/woocommerce-rest-api": "^1.0.1",
     "contentful-management": "^7.45.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
